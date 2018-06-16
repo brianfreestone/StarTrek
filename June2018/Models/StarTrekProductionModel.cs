@@ -52,5 +52,7 @@ namespace June2018.Models
             //    .WithOptional(e => e.StarTrekSeriesName)
             //    .HasForeignKey(e => e.SeriesID);
         }
+
+    
     }
 }

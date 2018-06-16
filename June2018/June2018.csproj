@@ -136,7 +136,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
-    <Content Include="StarTrek\StartTrekDefault.aspx" />
+    <Content Include="StarTrek\StarTrekDefault.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -157,13 +157,14 @@
     <Compile Include="Models\StarTrekUserData.cs" />
     <Compile Include="Models\StarTrekUserModel.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\WatchNext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StarTrek\StartTrekDefault.aspx.cs">
-      <DependentUpon>StartTrekDefault.aspx</DependentUpon>
+    <Compile Include="StarTrek\StarTrekDefault.aspx.cs">
+      <DependentUpon>StarTrekDefault.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StarTrek\StartTrekDefault.aspx.designer.cs">
-      <DependentUpon>StartTrekDefault.aspx</DependentUpon>
+    <Compile Include="StarTrek\StarTrekDefault.aspx.designer.cs">
+      <DependentUpon>StarTrekDefault.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

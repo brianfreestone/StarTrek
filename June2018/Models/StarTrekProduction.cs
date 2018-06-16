@@ -20,6 +20,9 @@ namespace June2018.Models
         public string Title { get; set; }
 
         [StringLength(50)]
+        public string Season { get; set; }
+
+        [StringLength(50)]
         public string Episode { get; set; }
 
         [StringLength(50)]
@@ -37,5 +40,10 @@ namespace June2018.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StarTrekUserData> StarTrekUserDatas { get; set; }
+
+
+
     }
+
+
 }
