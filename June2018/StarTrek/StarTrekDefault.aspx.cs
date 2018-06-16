@@ -5,9 +5,12 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
+
 
 namespace June2018.StarTrek
 {
@@ -75,6 +78,9 @@ namespace June2018.StarTrek
                     watchNext.Title = rdr[3].ToString();
                     watchNext.SeriesName = rdr[4].ToString();
                 }
+
+                MovieDB mdb = new MovieDB();
+                
             }
 
             lblOrigAirDate.Text = watchNext.OriginalAirDate;
@@ -96,8 +102,10 @@ namespace June2018.StarTrek
 
         }
 
+
+
         private void PopulateTVListBox()
-        {
+        { 
             StarTrekProductionModel dbContext = new StarTrekProductionModel();
 
             List<StarTrekSeriesName> listSeries = dbContext.StarTrekSeriesNames.ToList();
@@ -114,17 +122,19 @@ namespace June2018.StarTrek
         protected void btnWatched_Click(object sender, EventArgs e)
         {
             // add datewatched to shown item
-            int nextID = (int)Session["NextID"];
             StarTrekUserModel DBContext = new StarTrekUserModel();
             StarTrekUserData STUD = new StarTrekUserData();
+
             STUD.UserID = (int)Session["UserId"];
-            STUD.ProductionID = nextID;
+            STUD.ProductionID = (int)Session["NextID"];
             STUD.DateWatched = DateTime.Now;
 
             DBContext.StarTrekUserDatas.Add(STUD);
             DBContext.SaveChanges();
 
+            ShowNextAvailableItem();
 
+            PopulateMovieInfoGridView();
 
 
         }
@@ -139,6 +149,8 @@ namespace June2018.StarTrek
             MultiViewMain.SetActiveView(viewFilms);
 
             PopulateMovieInfoGridView();
+
+            PopulateSeriesInfoGridView(lbSeries.SelectedValue);
 
         }
 
@@ -233,5 +245,7 @@ namespace June2018.StarTrek
                 // change date to short date
             }
         }
+
+
     }
 }

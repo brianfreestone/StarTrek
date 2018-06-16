@@ -50,7 +50,7 @@
                             </asp:TableRow>
 
                         </asp:Table>
-                        <asp:Button ID="btnWatched" runat="server" Text="Mark as Watched" CssClass="btn btn-info" />
+                        <asp:Button ID="btnWatched" runat="server" Text="Mark as Watched" CssClass="btn btn-info" OnClick="btnWatched_Click" />
 
                     </asp:Panel>
                     <asp:Image ID="imgMain" runat="server" />
@@ -77,10 +77,10 @@
                                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                                         <Columns>
                                             <asp:BoundField DataField="Title" HeaderText="Title" SortExpression="Title" />
-                                            <asp:BoundField DataField="Episode" HeaderText="Episode" SortExpression="Episode" />
-                                            <asp:BoundField DataField="OriginalAirDate" HeaderText="OriginalAirDate" ReadOnly="True" SortExpression="OriginalAirDate" />
-                                            <asp:BoundField DataField="DateWatched" HeaderText="DateWatched" SortExpression="DateWatched" />
                                             <asp:BoundField DataField="Season" HeaderText="Season" SortExpression="Season" />
+                                            <asp:BoundField DataField="Episode" HeaderText="Episode" SortExpression="Episode" />
+                                            <asp:BoundField DataField="OriginalAirDate" HeaderText="Original Ai rDate" ReadOnly="True" SortExpression="OriginalAirDate" />
+                                            <asp:BoundField DataField="DateWatched" HeaderText="Date Watched" SortExpression="DateWatched" />
                                         </Columns>
                                         <EditRowStyle BackColor="#999999" />
                                         <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
@@ -103,9 +103,9 @@
                                 <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                                 <Columns>
                                     <asp:BoundField DataField="Title" HeaderText="Title" SortExpression="Title" />
-                                    <asp:BoundField DataField="OriginalAirDate" HeaderText="OriginalAirDate" ReadOnly="True" SortExpression="OriginalAirDate" />
-                                    <asp:BoundField DataField="DateWatched" HeaderText="DateWatched" SortExpression="DateWatched" />
-                                    <asp:BoundField DataField="UserID" HeaderText="UserID" SortExpression="UserID" />
+                                    <asp:BoundField DataField="OriginalAirDate" HeaderText="Original Air Date" ReadOnly="True" SortExpression="OriginalAirDate" />
+                                    <asp:BoundField DataField="DateWatched" HeaderText="Date Watched" SortExpression="DateWatched" />
+                                    <asp:BoundField DataField="UserID" HeaderText="UserID" SortExpression="UserID" Visible="False" />
                                 </Columns>
                                 <EditRowStyle BackColor="#999999" />
                                 <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
