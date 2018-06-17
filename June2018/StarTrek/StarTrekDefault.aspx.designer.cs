@@ -121,13 +121,13 @@ namespace June2018.StarTrek {
         protected global::System.Web.UI.WebControls.Label lblSecondaryTitle;
         
         /// <summary>
-        /// btnWatched control.
+        /// lblDescription control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnWatched;
+        protected global::System.Web.UI.WebControls.Label lblDescription;
         
         /// <summary>
         /// imgMain control.
@@ -137,6 +137,15 @@ namespace June2018.StarTrek {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image imgMain;
+        
+        /// <summary>
+        /// btnWatched control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnWatched;
         
         /// <summary>
         /// btnShowTV control.

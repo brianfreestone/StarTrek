@@ -1,4 +1,5 @@
 ﻿using June2018.Models;
+using June2018.Models.MovieDB;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -38,7 +39,7 @@ namespace June2018.StarTrek
 
             //var listInfo = dbContext.StarTrekUserDatas.Where(x => x.UserID == 1).ToList();
 
-            string cmdText = "SELECT TOP (1) StarTrekProductions.ID, StarTrekProductions.OriginalAirDate, StarTrekProductionTypes.ProductionType, StarTrekProductions.Title, StarTrekSeriesNames.SeriesName " +
+            string cmdText = "SELECT TOP (1) StarTrekProductions.ID, StarTrekProductions.OriginalAirDate, StarTrekProductionTypes.ProductionType, StarTrekProductions.Title, StarTrekSeriesNames.SeriesName, StarTrekProductions.Season, StarTrekProductions.Episode " +
                              "FROM StarTrekProductions INNER JOIN " +
                              "StarTrekProductionTypes ON StarTrekProductionTypes.ID = StarTrekProductions.ProductionTypeID INNER JOIN " +
                              "StarTrekSeriesNames ON StarTrekProductions.SeriesID = StarTrekSeriesNames.ID " +
@@ -52,9 +53,6 @@ namespace June2018.StarTrek
                              "(StarTrekUserData.UserID = 1) AND(StarTrekProductions.SeriesID IS NULL) " +
                              ") " +
                              "ORDER BY StarTrekProductions.OriginalAirDate";
-
-
-
 
             WatchNext watchNext = new WatchNext();
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dboMasterConnectionString"].ConnectionString))
@@ -77,9 +75,15 @@ namespace June2018.StarTrek
                     watchNext.ProductionType = rdr[2].ToString();
                     watchNext.Title = rdr[3].ToString();
                     watchNext.SeriesName = rdr[4].ToString();
+                    watchNext.SeriesNum = rdr[5].ToString();
+                    watchNext.EpisodeNum = rdr[6].ToString();
                 }
 
+                // todo get appropriate image(tv or movie)
                 MovieDB mdb = new MovieDB();
+                mdb = mdb.GetShowDetails(watchNext.SeriesName, watchNext.SeriesNum, watchNext.EpisodeNum);
+                lblDescription.Text = mdb.Details;
+                imgMain.ImageUrl = mdb.Image;
                 
             }
 

@@ -160,7 +160,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\MovieDB.cs" />
+    <Compile Include="Models\MovieDB\MovieDB.cs" />
+    <Compile Include="Models\MovieDB\MovieDBConfiguration.cs" />
+    <Compile Include="Models\MovieDB\StarTrekObject.cs" />
+    <Compile Include="Models\MovieDB\StarTrekShowDetails.cs" />
+    <Compile Include="Models\MovieDB\StarTrekShowImage.cs" />
     <Compile Include="Models\StarTrekProduction.cs" />
     <Compile Include="Models\StarTrekProductionModel.cs" />
     <Compile Include="Models\StarTrekProductionType.cs" />

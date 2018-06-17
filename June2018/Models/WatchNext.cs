@@ -32,6 +32,8 @@ namespace June2018.Models
 
         public int ID { get; set; }
         public TV_SERIES enumTVSeries { get; set; }
+        public string SeriesNum { get; set; }
+        public string EpisodeNum { get; set; }
         public string Title { get; set; }
         public string OriginalAirDate { get; set; }
         public string ProductionType { get; set; }
