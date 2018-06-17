@@ -10,8 +10,9 @@ namespace June2018.Models
     {
         public enum MEDIA_TYPE
         {
-            FILM = 1,
-            TELEVISION = 2
+
+            TELEVISION = 1,
+            FILM = 2
         }
 
         public enum TV_SERIES
@@ -50,7 +51,7 @@ namespace June2018.Models
                     medType = MEDIA_TYPE.TELEVISION;
                     break;
                 case "Film":
-                    medType= MEDIA_TYPE.FILM;
+                    medType = MEDIA_TYPE.FILM;
                     break;
             }
 

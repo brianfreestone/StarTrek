@@ -162,6 +162,7 @@
     </Compile>
     <Compile Include="Models\MovieDB\MovieDB.cs" />
     <Compile Include="Models\MovieDB\MovieDBConfiguration.cs" />
+    <Compile Include="Models\MovieDB\MovieDetails.cs" />
     <Compile Include="Models\MovieDB\StarTrekObject.cs" />
     <Compile Include="Models\MovieDB\StarTrekShowDetails.cs" />
     <Compile Include="Models\MovieDB\StarTrekShowImage.cs" />

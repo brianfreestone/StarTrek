@@ -16,20 +16,21 @@
                     <asp:Label ID="Label8" runat="server" Text="Watch Next:"></asp:Label>
                     <asp:Panel ID="Panel1" runat="server">
                         <asp:Table ID="Table1" runat="server">
-                            <asp:TableRow>
-                                <asp:TableCell>
-                                    <asp:Label ID="Label1" runat="server" Text="Original Air Date:" Font-Size="Medium"></asp:Label>
-                                </asp:TableCell>
-                                <asp:TableCell>
-                                    <asp:Label ID="lblOrigAirDate" runat="server" Text="" Font-Size="Medium"></asp:Label>
-                                </asp:TableCell>
-                            </asp:TableRow>
+                           
                             <asp:TableRow>
                                 <asp:TableCell>
                                     <asp:Label ID="Label2" runat="server" Text="Type:" Font-Size="Medium"></asp:Label>
                                 </asp:TableCell>
                                 <asp:TableCell>
                                     <asp:Label ID="lblType" runat="server" Text="" Font-Size="Medium"></asp:Label>
+                                </asp:TableCell>
+                            </asp:TableRow>
+                             <asp:TableRow>
+                                <asp:TableCell>
+                                    <asp:Label ID="Label1" runat="server" Text="Original Air Date:" Font-Size="Medium"></asp:Label>
+                                </asp:TableCell>
+                                <asp:TableCell>
+                                    <asp:Label ID="lblOrigAirDate" runat="server" Text="" Font-Size="Medium"></asp:Label>
                                 </asp:TableCell>
                             </asp:TableRow>
                             <asp:TableRow>
@@ -42,16 +43,16 @@
                             </asp:TableRow>
                             <asp:TableRow>
                                 <asp:TableCell>
-                                    <asp:Label ID="lblSecondaryType" runat="server" Text=":" Font-Size="Medium"></asp:Label>
+                                    <asp:Label ID="lblSecondaryType" runat="server" Text="" Font-Size="Medium"></asp:Label>
                                 </asp:TableCell>
                                 <asp:TableCell>
                                     <asp:Label ID="lblSecondaryTitle" runat="server" Text="" Font-Size="Medium"></asp:Label>
                                 </asp:TableCell>
                             </asp:TableRow>
                         </asp:Table>
-                        <h4>
-                            <asp:Label ID="lblDescription" runat="server" Text=""></asp:Label>
-                        </h4>
+                        
+                            <asp:Label ID="lblDescription" runat="server" Text="" Font-Size="Medium"></asp:Label>
+                       
                         <asp:Image ID="imgMain" runat="server" />
 
 
@@ -125,6 +126,7 @@
                                     <asp:Parameter Name="UserID" />
                                 </SelectParameters>
                             </asp:SqlDataSource>
+                            <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString='<%$ ConnectionStrings:dboMasterConnectionString %>' SelectCommand="SELECT StarTrekProductions.Season, COUNT(StarTrekProductions.Episode) AS Count, StarTrekProductions.SeriesID FROM StarTrekProductions INNER JOIN StarTrekSeriesNames ON StarTrekProductions.SeriesID = StarTrekSeriesNames.ID INNER JOIN StarTrekUserData ON StarTrekProductions.ID = StarTrekUserData.ProductionID WHERE (StarTrekUserData.UserID = 1) GROUP BY StarTrekProductions.Episode, StarTrekProductions.Season, StarTrekProductions.SeriesID"></asp:SqlDataSource>
                         </asp:View>
                     </asp:MultiView>
 

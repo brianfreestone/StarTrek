@@ -39,9 +39,9 @@ namespace June2018.StarTrek
 
             //var listInfo = dbContext.StarTrekUserDatas.Where(x => x.UserID == 1).ToList();
 
-            string cmdText = "SELECT TOP (1) StarTrekProductions.ID, StarTrekProductions.OriginalAirDate, StarTrekProductionTypes.ProductionType, StarTrekProductions.Title, StarTrekSeriesNames.SeriesName, StarTrekProductions.Season, StarTrekProductions.Episode " +
+            string cmdText = "SELECT TOP (1) StarTrekProductions.ID, StarTrekProductions.OriginalAirDate, StarTrekProductions.ProductionTypeID, StarTrekProductions.Title, StarTrekSeriesNames.SeriesName, StarTrekProductions.Season, StarTrekProductions.Episode " +
                              "FROM StarTrekProductions INNER JOIN " +
-                             "StarTrekProductionTypes ON StarTrekProductionTypes.ID = StarTrekProductions.ProductionTypeID INNER JOIN " +
+                             "StarTrekProductionTypes ON StarTrekProductionTypes.ID = StarTrekProductions.ProductionTypeID LEFT JOIN " +
                              "StarTrekSeriesNames ON StarTrekProductions.SeriesID = StarTrekSeriesNames.ID " +
                              "WHERE StarTrekProductions.ID NOT IN " +
                              "(" +
@@ -50,9 +50,17 @@ namespace June2018.StarTrek
                              "StarTrekUserData ON STP.ID = StarTrekUserData.ProductionID INNER JOIN " +
                              "StarTrekProductionTypes AS STPT ON STP.ProductionTypeID = STPT.ID " +
                              "WHERE(StarTrekUserData.UserID = 1) OR " +
-                             "(StarTrekUserData.UserID = 1) AND(StarTrekProductions.SeriesID IS NULL) " +
+                             "(StarTrekUserData.UserID = 1) AND (StarTrekProductions.SeriesID IS NULL) " +
                              ") " +
                              "ORDER BY StarTrekProductions.OriginalAirDate";
+
+
+            // enforce movie
+            //cmdText = "SELECT StarTrekProductions.ID, StarTrekProductions.OriginalAirDate, StarTrekProductions.ProductionTypeID, StarTrekProductions.Title, StarTrekSeriesNames.SeriesName, StarTrekProductions.Season, StarTrekProductions.Episode " +
+            //          "FROM StarTrekProductions INNER JOIN " +
+            //          "StarTrekProductionTypes ON StarTrekProductionTypes.ID = StarTrekProductions.ProductionTypeID LEFT JOIN " +
+            //          "StarTrekSeriesNames ON StarTrekProductions.SeriesID = StarTrekSeriesNames.ID " +
+            //          "WHERE StarTrekProductions.ID = 7";
 
             WatchNext watchNext = new WatchNext();
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dboMasterConnectionString"].ConnectionString))
@@ -72,7 +80,7 @@ namespace June2018.StarTrek
                     Session["NextID"] = watchNext.ID;
 
                     watchNext.OriginalAirDate = Convert.ToDateTime(rdr[1]).ToShortDateString();
-                    watchNext.ProductionType = rdr[2].ToString();
+                    watchNext.enumMediaType = (WatchNext.MEDIA_TYPE)rdr[2];
                     watchNext.Title = rdr[3].ToString();
                     watchNext.SeriesName = rdr[4].ToString();
                     watchNext.SeriesNum = rdr[5].ToString();
@@ -81,7 +89,7 @@ namespace June2018.StarTrek
 
                 // todo get appropriate image(tv or movie)
                 MovieDB mdb = new MovieDB();
-                mdb = mdb.GetShowDetails(watchNext.SeriesName, watchNext.SeriesNum, watchNext.EpisodeNum);
+                mdb = mdb.GetShowDetails(watchNext.enumMediaType, watchNext.Title, watchNext.SeriesName, watchNext.SeriesNum, watchNext.EpisodeNum);
                 lblDescription.Text = mdb.Details;
                 imgMain.ImageUrl = mdb.Image;
                 
@@ -89,20 +97,40 @@ namespace June2018.StarTrek
 
             lblOrigAirDate.Text = watchNext.OriginalAirDate;
 
-            if (watchNext.enumMediaType == WatchNext.MEDIA_TYPE.FILM)
+            switch (watchNext.enumMediaType)
             {
-                lblPrimaryType.Text = "Movie:";
-                lblPrimaryTitle.Text = watchNext.Title;
+                case WatchNext.MEDIA_TYPE.TELEVISION:
+                    lblType.Text = "Television";
+                    lblPrimaryType.Text = "Series:";
+                    lblPrimaryTitle.Text = watchNext.SeriesName;
+                    lblSecondaryType.Text = "Title:";
+                    lblSecondaryTitle.Text = watchNext.Title;
+                    break;
+                case WatchNext.MEDIA_TYPE.FILM:
+                    lblType.Text = "Movie";
+                    lblPrimaryType.Text = "Movie:";
+                    lblPrimaryTitle.Text = watchNext.Title;
+                    break;
+                default:
+                    break;
             }
-            else
-            {
-                lblPrimaryType.Text = "Series:";
-                lblPrimaryTitle.Text = watchNext.SeriesName;
-                lblSecondaryType.Text = "Title:";
-                lblSecondaryTitle.Text = watchNext.Title;
 
-            }
-            lblType.Text = watchNext.ProductionType;
+            //if (watchNext.enumMediaType == WatchNext.MEDIA_TYPE.FILM)
+            //{
+            //    lblType.Text = "Movie";
+            //    lblPrimaryType.Text = "Movie:";
+            //    lblPrimaryTitle.Text = watchNext.Title;
+            //}
+            //else
+            //{
+            //    lblType.Text = "Television";
+            //    lblPrimaryType.Text = "Series:";
+            //    lblPrimaryTitle.Text = watchNext.SeriesName;
+            //    lblSecondaryType.Text = "Title:";
+            //    lblSecondaryTitle.Text = watchNext.Title;
+
+            //}
+            
 
         }
 
