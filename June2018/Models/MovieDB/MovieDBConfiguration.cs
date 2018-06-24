@@ -21,15 +21,6 @@ namespace June2018.Models
 
         public MovieDBConfiguration()
         {
-            //url = "https://api.themoviedb.org/3/configuration?api_key=" + appId;
-            //using (WebClient client = new WebClient())
-            //{
-            //    json = client.DownloadString(url);
-
-            //    var ConfigDetails = MovieDBConfiguration.FromJson(json);
-
-               
-            //}
 
         }
     }

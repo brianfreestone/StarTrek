@@ -211,15 +211,6 @@ namespace June2018.StarTrek {
         protected global::System.Web.UI.WebControls.GridView gvSeriesInfo;
         
         /// <summary>
-        /// EntityDataSourceSeriesInfo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.EntityDataSource EntityDataSourceSeriesInfo;
-        
-        /// <summary>
         /// viewFilms control.
         /// </summary>
         /// <remarks>

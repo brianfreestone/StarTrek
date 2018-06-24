@@ -174,6 +174,7 @@ namespace June2018.StarTrek
         protected void btnShowTV_Click(object sender, EventArgs e)
         {
             MultiViewMain.SetActiveView(viewTV);
+            PopulateSeriesInfoGridView(lbSeries.SelectedValue);
         }
 
         protected void btnShowMovies_Click(object sender, EventArgs e)
@@ -182,7 +183,7 @@ namespace June2018.StarTrek
 
             PopulateMovieInfoGridView();
 
-            PopulateSeriesInfoGridView(lbSeries.SelectedValue);
+         
 
         }
 
@@ -232,42 +233,55 @@ namespace June2018.StarTrek
 
         private void PopulateSeriesInfoGridView(string selectedValue)
         {
-            int seriesID = Convert.ToInt32(selectedValue);
-            int userID = (int)Session["UserID"];
 
-            DataSet listSeriesInfo = new DataSet();
-
-            string cmdText = "SELECT StarTrekProductions.Title, StarTrekProductions.Episode, CONVERT(VARCHAR(50), StarTrekProductions.OriginalAirDate, 101) AS OriginalAirDate, " +
-                             "StarTrekUserData.DateWatched, StarTrekProductions.Season FROM StarTrekProductions " +
-                             "LEFT OUTER JOIN StarTrekUserData ON StarTrekProductions.ID = StarTrekUserData.ProductionID " +
-                             "WHERE (StarTrekProductions.SeriesID = @SeriesID) AND (StarTrekUserData.UserID = @UserID OR StarTrekUserData.UserID IS NULL AND StarTrekUserData.DateWatched IS NULL) "; // +
-                                                                                                                                                                                                      //"OR (StarTrekProductions.SeriesID = @SeriesID) AND (StarTrekUserData.DateWatched IS NULL)";
-
-            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dboMasterConnectionString"].ConnectionString))
+            int seriesID;
+            try
             {
-                //SqlCommand cmd = new SqlCommand(cmdText, con);
+                seriesID = Convert.ToInt32(selectedValue);
 
-                SqlDataAdapter da = new SqlDataAdapter(cmdText, con);
-                da.SelectCommand.Parameters.AddWithValue("@SeriesID", seriesID);
-                da.SelectCommand.Parameters.AddWithValue("@UserID", userID);
+                int userID = (int)Session["UserID"];
+
+                DataSet listSeriesInfo = new DataSet();
+
+                string cmdText = "SELECT StarTrekProductions.Title, StarTrekProductions.Episode, CONVERT(VARCHAR(50), StarTrekProductions.OriginalAirDate, 101) AS OriginalAirDate, " +
+                                 "StarTrekUserData.DateWatched, StarTrekProductions.Season FROM StarTrekProductions " +
+                                 "LEFT OUTER JOIN StarTrekUserData ON StarTrekProductions.ID = StarTrekUserData.ProductionID " +
+                                 "WHERE (StarTrekProductions.SeriesID = @SeriesID) AND (StarTrekUserData.UserID = @UserID OR StarTrekUserData.UserID IS NULL AND StarTrekUserData.DateWatched IS NULL) "; // +
+                                                                                                                                                                                                          //"OR (StarTrekProductions.SeriesID = @SeriesID) AND (StarTrekUserData.DateWatched IS NULL)";
+
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dboMasterConnectionString"].ConnectionString))
+                {
+                    //SqlCommand cmd = new SqlCommand(cmdText, con);
+
+                    SqlDataAdapter da = new SqlDataAdapter(cmdText, con);
+                    da.SelectCommand.Parameters.AddWithValue("@SeriesID", seriesID);
+                    da.SelectCommand.Parameters.AddWithValue("@UserID", userID);
 
 
-                da.Fill(listSeriesInfo);
+                    da.Fill(listSeriesInfo);
 
+                }
+
+
+                //StarTrekUserModel dbContext = new StarTrekUserModel();
+
+                //var query = dbContext.StarTrekUserDatas.GroupJoin(dbContext.StarTrekProductions, x => x.ProductionID, y => y.ProductionTypeID, (x, y) => new { x, y }).SelectMany(x => x.y.DefaultIfEmpty(), (x, y) => new { x.x.DateWatched, y.Title }).ToList();
+
+                //List < StarTrekUserData > listSeriesInfo = dbContext.StarTrekUserDatas.Where(x => x.UserID == userID && x.StarTrekProduction.SeriesID == seriesID).DefaultIfEmpty().ToList();
+
+
+                gvSeriesInfo.DataSource = listSeriesInfo.Tables[0];
+                gvSeriesInfo.DataBind();
 
 
             }
+            catch (Exception)
+            {
 
-
-            //StarTrekUserModel dbContext = new StarTrekUserModel();
-
-            //var query = dbContext.StarTrekUserDatas.GroupJoin(dbContext.StarTrekProductions, x => x.ProductionID, y => y.ProductionTypeID, (x, y) => new { x, y }).SelectMany(x => x.y.DefaultIfEmpty(), (x, y) => new { x.x.DateWatched, y.Title }).ToList();
-
-            //List < StarTrekUserData > listSeriesInfo = dbContext.StarTrekUserDatas.Where(x => x.UserID == userID && x.StarTrekProduction.SeriesID == seriesID).DefaultIfEmpty().ToList();
-
-
-            gvSeriesInfo.DataSource = listSeriesInfo.Tables[0];
-            gvSeriesInfo.DataBind();
+               
+            }
+            
+           
         }
 
         protected void gvSeriesInfo_RowDataBound(object sender, GridViewRowEventArgs e)

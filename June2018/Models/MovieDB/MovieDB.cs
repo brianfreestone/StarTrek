@@ -79,13 +79,14 @@ namespace June2018.Models.MovieDB
 
             MovieDBConfiguration movieDBConfiguration = MovieDBConfiguration.FromJson(json);
             base_url = movieDBConfiguration.Images.BaseUrl;
-            file_size = movieDBConfiguration.Images.PosterSizes[4]; // w500
+            file_size = movieDBConfiguration.Images.PosterSizes[3]; // w500
 
             MovieDB movieDB = new MovieDB();
 
             switch (mediaType)
             {
                 case WatchNext.MEDIA_TYPE.FILM:
+
                     // get Movie Details
                     url = "https://api.themoviedb.org/3/search/movie?api_key=" + appId + "&language=en-US&query=" + title + "&page=1&include_adult=false";
                     json = GetJson(url);
@@ -110,16 +111,6 @@ namespace June2018.Models.MovieDB
                     break;
   
             }
-
-
-
-            //// get TV Image
-            //url = "https://api.themoviedb.org/3/tv/" + TVID + "/season/" + Season + "/episode/" + Episode + "/images?api_key=" + appId;
-
-            //json = GetJson(url);
-            //StarTrekShowImage starTrekShowImage = StarTrekShowImage.FromJson(json);
-            ////movieDB.Image = starTrekShowImage.Stills;
-            //stillsPath = starTrekShowImage.Stills[0].FilePath;
 
             movieDB.Image = base_url + file_size + stillsPath;
 
