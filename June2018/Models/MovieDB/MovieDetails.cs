@@ -72,7 +72,7 @@ namespace June2018.Models.MovieDBMovie
     {
         public static MovieDetails FromJson(string json) => JsonConvert.DeserializeObject<MovieDetails>(json, June2018.Models.MovieDBMovie.Converter.Settings);
     }
-
+    
     public static class Serialize
     {
         public static string ToJson(this MovieDetails self) => JsonConvert.SerializeObject(self, June2018.Models.MovieDBMovie.Converter.Settings);

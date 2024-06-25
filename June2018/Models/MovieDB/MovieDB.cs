@@ -13,7 +13,7 @@ namespace June2018.Models.MovieDB
         public string Details;
         public string Image;
         public const string appId = "307312fdc6a58dfff8694e85a59f3f29";
-
+        public StarTrekShowDetails details;
 
 
         public MovieDB()
@@ -25,6 +25,8 @@ namespace June2018.Models.MovieDB
         {
             using (WebClient client = new WebClient())
             {
+
+                ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
                 string json;
                 json = client.DownloadString(url);
                 
@@ -42,6 +44,7 @@ namespace June2018.Models.MovieDB
             string url;
             string json;
             string appId = "307312fdc6a58dfff8694e85a59f3f29";
+            DateTime airDate;
 
             url = "https://api.themoviedb.org/3/search/tv?api_key="+ appId + "&language=en-US &query=" + ShowTitle + " &page=1";
             json = GetJson(url);
@@ -107,6 +110,7 @@ namespace June2018.Models.MovieDB
 
                     movieDB.Details = starTrekShowDetails.Overview;
                     stillsPath = starTrekShowDetails.StillPath;
+                    movieDB.details = starTrekShowDetails;
 
                     break;
   

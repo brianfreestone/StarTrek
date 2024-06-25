@@ -34,13 +34,14 @@ namespace June2018.Models
         public int ID { get; set; }
         public TV_SERIES enumTVSeries { get; set; }
         public string SeriesNum { get; set; }
+        public string SeasonNum { get; set; }
         public string EpisodeNum { get; set; }
         public string Title { get; set; }
         public string OriginalAirDate { get; set; }
         public string ProductionType { get; set; }
         public MEDIA_TYPE enumMediaType { get; set; }
         public string SeriesName { get; set; }
-
+    
         public static MEDIA_TYPE GetEnumMediaType(string mType)
         {
 
@@ -86,6 +87,34 @@ namespace June2018.Models
             }
 
             return medType;
+        }
+
+        public static string GetStringName(TV_SERIES tvSeries)
+        {
+            string stringName = "";
+
+            switch (tvSeries)
+            {
+                case TV_SERIES.THE_ORIGINAL_SERIES:
+                    stringName = "Star Trek: The Original Series";
+                    break;
+                case TV_SERIES.THE_ANIMATED_SERIES:
+                    stringName = "Star Trek: The Animated Series";
+                    break;
+                case TV_SERIES.THE_NEXT_GENERATION:
+                    stringName = "Star Trek: The Next Generation";
+                    break;
+                case TV_SERIES.DEEP_SPACE_NINE:
+                    stringName = "Star Trek: Deep Space Nine";
+                    break;
+                case TV_SERIES.VOYAGER:
+                    stringName = "Star Trek: Voyager";
+                    break;
+                case TV_SERIES.ENTERPRISE:
+                    stringName = "Star Trek: Enterprise";
+                    break;
+            }
+            return stringName;
         }
     }
 }
