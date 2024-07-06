@@ -151,7 +151,6 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
-    <Content Include="StarTrek\DisplayImage.aspx" />
     <Content Include="StarTrek\StarTrekDefault.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -184,13 +183,6 @@
     <Compile Include="Models\StarTrekModels\User.cs" />
     <Compile Include="Models\StarTrekModels\WatchNext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StarTrek\DisplayImage.aspx.cs">
-      <DependentUpon>DisplayImage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="StarTrek\DisplayImage.aspx.designer.cs">
-      <DependentUpon>DisplayImage.aspx</DependentUpon>
-    </Compile>
     <Compile Include="StarTrek\StarTrekDefault.aspx.cs">
       <DependentUpon>StarTrekDefault.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

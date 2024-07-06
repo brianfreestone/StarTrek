@@ -10,9 +10,8 @@
     <link href="../Content/bootswatch/superhero/bootstrap.css" rel="stylesheet" />
     <link href="../Content/CSS/style.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-     <style type="text/css">
-        .fadingTooltip
-        {
+    <style type="text/css">
+        .fadingTooltip {
             border-right: darkgray 1px outset;
             border-top: darkgray 1px outset;
             font-size: 12pt;
@@ -26,19 +25,18 @@
             padding: 3px 3px 3px 3px;
             borderbottomwidth: 3px 3px 3px 3px;
         }
-        .style2
-        {
+
+        .style2 {
             height: 23px;
         }
-        .style3
-        {
+
+        .style3 {
             height: 22px;
         }
-        
-        
     </style>
     <script type="text/javascript">
         var fadingTooltip;
+        var picture;
         var wnd_height, wnd_width;
         var tooltip_height, tooltip_width;
         var tooltip_shown = false;
@@ -51,13 +49,16 @@
         window.onresize = UpdateWindowSize;
         document.onmousemove = AdjustToolTipPosition;
 
-        function DisplayImageToolTip(tooltip_text) {
-            console.log(tooltip_text)
-            fadingTooltip.innerHTML = tooltip_text;
+        function DisplayToolTip(tooltip_text) {
+            //console.log(tooltip_text)
+            //fadingTooltip.innerHTML = tooltip_text;
+            picture.src = tooltip_text;
             tooltip_shown = (tooltip_text != "") ? true : false;
             if (tooltip_text != "") {
                 // Get tooltip window height
                 tooltip_height = (fadingTooltip.style.pixelHeight) ? fadingTooltip.style.pixelHeight : fadingTooltip.offsetHeight;
+
+
                 transparency = 0;
                 ToolTipFading();
             }
@@ -76,21 +77,33 @@
                 else
                     ev = event;
 
+
+
+                fadingTooltip.style.left =
+                 (ev.pageX + fadingTooltip.clientWidth + 10 < document.body.clientWidth)
+                      ? (ev.pageX + 10 + "px")
+                      : (document.body.clientWidth + 5 - fadingTooltip.clientWidth + "px");
+                fadingTooltip.style.top =
+                    (ev.pageY + fadingTooltip.clientHeight + 10 < document.body.clientHeight)
+                        ? (ev.pageY - 150 + "px")
+                        : (document.body.clientHeight - 150 - fadingTooltip.clientHeight + "px");
+
                 fadingTooltip.style.visibility = "visible";
-                offset_y = (ev.clientY + tooltip_height - document.body.scrollTop + 30 >= wnd_height) ? -15 - tooltip_height : 20;
-                fadingTooltip.style.left = Math.min(wnd_width - tooltip_width - 10, Math.max(3, ev.clientX + 6)) + document.body.scrollLeft + 'px';
-                fadingTooltip.style.top = ev.clientY + offset_y + document.body.scrollTop + 'px';
+
             }
         }
 
         function WindowLoading() {
             fadingTooltip = document.getElementById('fadingTooltip');
+            picture = document.getElementById('Image1');
 
             // Get tooltip  window width				
             tooltip_width = (fadingTooltip.style.pixelWidth) ? fadingTooltip.style.pixelWidth : fadingTooltip.offsetWidth;
+          
 
             // Get tooltip window height
             tooltip_height = (fadingTooltip.style.pixelHeight) ? fadingTooltip.style.pixelHeight : fadingTooltip.offsetHeight;
+          
 
             UpdateWindowSize();
         }
@@ -112,11 +125,9 @@
 </head>
 <body>
     <form id="form1" runat="server">
-            <div class="fadingTooltip" id="fadingTooltip" style="z-index: 999; visibility: hidden;
-        position: absolute">
-
-                <image runat="server" id="picture" />
-    </div>
+        <div class="fadingTooltip" id="fadingTooltip" style="z-index: 999; visibility: hidden; position: absolute">
+            <asp:Image ID="Image1" runat="server" />
+        </div>
         <asp:ScriptManager runat="server"></asp:ScriptManager>
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
@@ -252,37 +263,57 @@
                                             <asp:Label ID="Label6" runat="server" Text="Synopsis"></asp:Label>
                                         </asp:TableCell>
                                         <asp:TableCell>
-                                            <asp:TextBox  ID="txtSelectedSynopsis" runat="server" TextMode="MultiLine" Columns="50" Rows="5"></asp:TextBox>
+                                            <asp:TextBox ID="txtSelectedSynopsis" runat="server" TextMode="MultiLine" Columns="50" Rows="5"></asp:TextBox>
                                         </asp:TableCell>
                                     </asp:TableRow>
 
-                                    
+
                                 </asp:Table>
-                                            <asp:Label ID="Label7" runat="server" Text="Crew"></asp:Label>
-                                            <asp:GridView ID="gvCrew" runat="server" CellPadding="4" CellSpacing="2" ForeColor="#333333" GridLines="None" AutoGenerateColumns="False" OnDataBound="gvCrew_DataBound" OnRowCreated="gvCrew_RowCreated" OnRowDataBound="gvCrew_RowDataBound">
-                                                <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
-                                                <Columns>
-                                                    <asp:BoundField DataField="CreditId" HeaderText="Dept"  Visible="false"/>
-                                                    <asp:BoundField DataField="GenderId" HeaderText="Dept"  Visible="false"/>
-
-
-                                                    <asp:BoundField DataField="Department" HeaderText="Dept" />
-                                                    <asp:BoundField DataField="Job" HeaderText="Job" />
-                                                    <asp:BoundField DataField="Name" HeaderText="Name" />
-                                                    <asp:BoundField DataField="ProfilePath" HeaderText="Profile" />
-                                                </Columns>
-                                                <EditRowStyle BackColor="#999999" />
-                                                <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                                                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                                                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
-                                                <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
-                                                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
-                                                <SortedAscendingCellStyle BackColor="#E9E7E2" />
-                                                <SortedAscendingHeaderStyle BackColor="#506C8C" />
-                                                <SortedDescendingCellStyle BackColor="#FFFDF8" />
-                                                <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+                                <asp:Label ID="Label10" runat="server" Text="Guest Stars"></asp:Label>
+                                <asp:GridView ID="gvCast" runat="server" CellPadding="4" CellSpacing="2" ForeColor="Black" AutoGenerateColumns="False" OnRowDataBound="gvCast_RowDataBound" DataKeyNames="ProfilePath" BackColor="#CCCCCC" BorderColor="#999999" BorderStyle="Solid" BorderWidth="3px">
+                                    <Columns>
+                                        <asp:BoundField DataField="CreditId" HeaderText="Dept" Visible="false" />
+                                        <asp:BoundField DataField="GenderId" HeaderText="Dept" Visible="false" />
+                                        <asp:BoundField DataField="Character" HeaderText="Character" />
+                                        <asp:BoundField DataField="Name" HeaderText="Name" />
+                                        <asp:BoundField DataField="ProfilePath" HeaderText="Profile Pic" />
+                                    </Columns>
+                                    <FooterStyle BackColor="#CCCCCC" />
+                                    <HeaderStyle BackColor="Black" Font-Bold="True" ForeColor="White" />
+                                    <PagerStyle BackColor="#CCCCCC" ForeColor="Black" HorizontalAlign="Left" />
+                                    <RowStyle BackColor="White" />
+                                    <SelectedRowStyle BackColor="#000099" Font-Bold="True" ForeColor="White" />
+                                    <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                                    <SortedAscendingHeaderStyle BackColor="#808080" />
+                                    <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                                    <SortedDescendingHeaderStyle BackColor="#383838" />
                                 </asp:GridView>
-          
+                                <br />
+                                <asp:Label ID="Label7" runat="server" Text="Crew"></asp:Label>
+
+                                <asp:GridView ID="gvCrew" runat="server" CellPadding="4" CellSpacing="4" ForeColor="#333333" GridLines="None" AutoGenerateColumns="False" OnRowDataBound="gvCrew_RowDataBound" DataKeyNames="ProfilePath">
+                                    <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+                                    <Columns>
+                                        <asp:BoundField DataField="CreditId" HeaderText="Dept" Visible="false" />
+                                        <asp:BoundField DataField="GenderId" HeaderText="Dept" Visible="false" />
+                                        <asp:BoundField DataField="Department" HeaderText="Dept" />
+                                        <asp:BoundField DataField="Job" HeaderText="Job" />
+                                        <asp:BoundField DataField="Name" HeaderText="Name" />
+                                        <asp:BoundField DataField="ProfilePath" HeaderText="Profile Pic" />
+                                    </Columns>
+                                    <EditRowStyle BackColor="#999999" />
+                                    <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                                    <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                                    <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                                    <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                                    <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                                    <SortedAscendingCellStyle BackColor="#E9E7E2" />
+                                    <SortedAscendingHeaderStyle BackColor="#506C8C" />
+                                    <SortedDescendingCellStyle BackColor="#FFFDF8" />
+                                    <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+                                </asp:GridView>
+                                <br />
+
                                 <asp:Image ID="seletedEpisodeImage" runat="server" />
                             </asp:Panel>
 

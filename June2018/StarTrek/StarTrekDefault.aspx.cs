@@ -505,6 +505,10 @@ namespace June2018.StarTrek
                 lblSelectedSeason.Text = seasonNum;
                 lblSelectedEpisode.Text = episodeNum;
                 lblSelectedAirDate.Text = mdb.details.AirDate.Date.ToShortDateString();
+
+                gvCast.DataSource = mdb.details.GuestStars;
+                gvCast.DataBind();
+
                 gvCrew.DataSource = mdb.details.Crew;
                 gvCrew.DataBind();
                 txtSelectedSynopsis.Text = mdb.Details;
@@ -552,34 +556,42 @@ namespace June2018.StarTrek
             }
         }
 
-        protected void gvCrew_DataBound(object sender, EventArgs e)
-        {
-          
-        }
-
-        protected void gvCrew_RowCreated(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                string helper = string.Format("DisplayImage.aspx?id={0}", HttpUtility.UrlEncode(e.Row.Cells[5].Text));
-                //e.Row.ToolTip = helper;
-
-            }
-        }
-
         protected void gvCrew_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 if (e.Row.Cells[5].Text != "" && e.Row.Cells[5].Text != "&nbsp;")
                 {
+                    Crew crew = (Crew)e.Row.DataItem;
+                    string url = string.Format("https://image.tmdb.org/t/p/w342{0}", HttpUtility.UrlEncode(crew.ProfilePath));
+                    e.Row.Cells[5].Text = "Yes";
+
                     string helper = string.Format("DisplayImage.aspx?src='https://image.tmdb.org/t/p/w342{0}'", HttpUtility.UrlEncode(e.Row.Cells[5].Text));
                     string toolTip = string.Format("<img src=DisplayImage.aspx?source={0}", e.Row.Cells[5].Text) + " />";
-                    e.Row.ToolTip = helper;
-                    e.Row.Attributes.Add("onmouseover", "DisplayImageToolTip('" + toolTip + "');");
-                    e.Row.Attributes.Add("onmouseout", "DisplayImageToolTip('');");
+                    e.Row.Attributes.Add("onmouseover", "DisplayToolTip('" + url + "');");
+                    e.Row.Attributes.Add("onmouseout", "DisplayToolTip('');");
                 }
            
+
+            }
+        }
+
+        protected void gvCast_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                if (e.Row.Cells[4].Text != "" && e.Row.Cells[4].Text != "&nbsp;")
+                {
+                    GuestStar star = (GuestStar)e.Row.DataItem;
+                    string url = string.Format("https://image.tmdb.org/t/p/w342{0}", HttpUtility.UrlEncode(star.ProfilePath));
+                    e.Row.Cells[4].Text = "Yes";
+
+                    //string helper = string.Format("DisplayImage.aspx?src='https://image.tmdb.org/t/p/w342{0}'", HttpUtility.UrlEncode(e.Row.Cells[5].Text));
+                    string toolTip = string.Format("<img src=DisplayImage.aspx?source={0}", e.Row.Cells[4].Text) + " />";
+                    e.Row.Attributes.Add("onmouseover", "DisplayToolTip('" + url + "');");
+                    e.Row.Attributes.Add("onmouseout", "DisplayToolTip('');");
+                }
+
 
             }
         }
